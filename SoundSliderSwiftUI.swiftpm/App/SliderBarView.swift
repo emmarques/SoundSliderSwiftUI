@@ -7,14 +7,14 @@ import Combine
 import MediaPlayer
 
 struct SliderBarView: View {
-    @State private var showAnimation = false
     private let maxTime: TimeInterval = 3
+    let maxAngle: Double = 70
+    
+    @State private var showAnimation = false
     @State var progress: Double = 0
     @State var startDate: Double = Date().timeIntervalSince1970
     @State var isPressing = false
     @State var barWidth: CGFloat = 0
-    let maxAngle: Double = 70
-    let maxHeight: CGFloat = 40
     let buttonHeight: CGFloat = 32
     let maxStartAngle: CGFloat = 10
     let maxEndAngle: CGFloat = 180
@@ -28,10 +28,10 @@ struct SliderBarView: View {
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .frame(maxWidth: buttonHeight * progress, maxHeight: buttonHeight)
-                        .rotationEffect(.degrees(isPressing ? throwAngle() : 0))
                     soundButton
                 }
                 .background(Color.gray)
+                .rotationEffect(.degrees(isPressing ? throwAngle() : 0))
                 .mask {
                     Image("sound-icon")
                         .resizable()
@@ -117,7 +117,7 @@ extension SliderBarView {
             }
             .frame(width: barWidth * progress, height: 10)
 //            .background(Color.green)
-            .rotationEffect(.degrees(isPressing ? throwStartAngle : throwEndAngle), anchor: .center)
+            .rotationEffect(.degrees(isPressing ? throwStartAngle : throwEndAngle))
         }
         .frame(maxWidth: .infinity, maxHeight: 10)
     }
